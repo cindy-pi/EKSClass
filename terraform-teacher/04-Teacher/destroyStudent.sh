@@ -1,3 +1,5 @@
+cp ../02-Deploy-EKS/.kube .
+export KUBECONFIG=./.kube
 
 export studentNumber=$1
 

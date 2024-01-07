@@ -39,6 +39,7 @@ WORKDIR /opt/apps/EKSClass
 COPY bashrc /etc/bash.bashrc
 COPY terraform .
 
+RUN rm -rf terraform 
 # Expose port for WebTTY
 EXPOSE 7681
 
