@@ -1,9 +1,23 @@
+!/bin/bash
 
-./destroyStudent.sh 10
-./destroyStudent.sh 11
-./destroyStudent.sh 12
-./destroyStudent.sh 13
-./destroyStudent.sh 14
-./destroyStudent.sh 15
-./destroyStudent.sh 16
-./destroyStudent.sh 17
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <max_number>"
+    exit 1
+fi
+
+max_number=$1
+
+for i in $(seq -w 1 $max_number)
+do
+  nohup ./destroyStudent.sh "$i" > destroyStudent-$i.log &
+done
+
+wait
+
+grep eksclass-service destroy*.log
+
+echo "Students 01 to $i, are destroyed."
+
+rm *.json
+rm *.log
+

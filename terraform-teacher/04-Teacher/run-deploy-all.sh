@@ -1,9 +1,20 @@
+#!/bin/bash
 
-./deployStudent.sh 10
-./deployStudent.sh 11
-./deployStudent.sh 12
-./deployStudent.sh 13
-./deployStudent.sh 14
-./deployStudent.sh 15
-./deployStudent.sh 16
-./deployStudent.sh 17
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <max_number>"
+    exit 1
+fi
+
+max_number=$1
+
+for i in $(seq -w 1 $max_number)
+do
+  nohup ./deployStudent.sh "$i" > deployStudent-$i.log &
+done
+
+wait
+
+grep eksclass-service deploy*.log
+
+echo "Students 01 to $i, are ready for use."
+

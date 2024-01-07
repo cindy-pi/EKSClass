@@ -1,7 +1,15 @@
+
+#!/bin/bash
+
 cp ../02-Deploy-EKS/.kube .
 export KUBECONFIG=./.kube
 
 export studentNumber=$1
+
+if kubectl get service eksclass-service-$studentNumber > /dev/null 2>&1; then
+    echo "eksclass-service-$studentNumber is already Deployed"
+    exit
+fi
 
 cat << EOF | kubectl apply -f -
 apiVersion: v1
@@ -14,7 +22,7 @@ spec:
   hostname: eksclass-${studentNumber}
   containers:
   - name: eksclass-container-${studentNumber}
-    image: cindyspirion/test:test1
+    image: ${DOCKER_IMAGE}
     ports:
     - containerPort: 7681
 
@@ -53,7 +61,7 @@ while [ -z "$hostname" ]; do
 done
 
 
-cat <<EOF > add-cname.json
+cat <<EOF > add-student${studentNumber}-cname.json
 {
   "Comment": "Create CNAME record for student${studentNumber}.wyckedsolutions.com",
   "Changes": [
@@ -75,7 +83,7 @@ cat <<EOF > add-cname.json
 EOF
 
 
-change_id=$(aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://add-cname.json --query 'ChangeInfo.Id' --output text)
+change_id=$(aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://add-student${studentNumber}-cname.json --query 'ChangeInfo.Id' --output text)
 
 # Initial status is set to PENDING
 status="PENDING"
