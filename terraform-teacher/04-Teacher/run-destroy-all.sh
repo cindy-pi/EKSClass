@@ -1,23 +1,31 @@
-!/bin/bash
+#!/bin/bash
 
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <max_number>"
-    exit 1
-fi
+cp ../02-Deploy-EKS/.kube .
 
-max_number=$1
+# Assuming max_number is set
+max_number=100
 
-for i in $(seq -w 1 $max_number)
+# Batch size
+batch_size=10
+
+# Loop through each batch
+for (( batch_start=1; batch_start<=max_number; batch_start+=batch_size ))
 do
-  nohup ./destroyStudent.sh "$i" > destroyStudent-$i.log &
+    batch_end=$((batch_start+batch_size-1))
+
+    # Loop through each student in the batch
+    for i in $(seq -w $batch_start $batch_end)
+    do
+        if [ $i -le $max_number ]; then
+            nohup ./destroyStudent.sh "$i" > destroyStudent-$i.log &
+        fi
+    done
+
+    # Wait for the current batch to complete
+    wait
+    grep "Destroy completed" deployStudent*.log | sort -u
+    echo "Batch $batch_start to $batch_end completed"
 done
 
-wait
 
-grep eksclass-service destroy*.log
-
-echo "Students 01 to $i, are destroyed."
-
-rm *.json
-rm *.log
 

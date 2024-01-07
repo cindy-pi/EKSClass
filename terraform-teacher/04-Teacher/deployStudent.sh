@@ -1,7 +1,4 @@
-
 #!/bin/bash
-
-cp ../02-Deploy-EKS/.kube .
 export KUBECONFIG=./.kube
 
 export studentNumber=$1
@@ -59,7 +56,6 @@ while [ -z "$hostname" ]; do
         echo "Hostname found: $hostname"
     fi
 done
-
 
 cat <<EOF > add-student${studentNumber}-cname.json
 {

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cp ../02-Deploy-EKS/.kube .
 export KUBECONFIG=./.kube
 
 export studentNumber=$1
@@ -113,5 +112,4 @@ spec:
 EOF
 
 echo "eksclass-service-${studentNumber} Deleted"
-
 
