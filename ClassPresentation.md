@@ -50,3 +50,7 @@ This resource is used to execute a command on the local machine running Terrafor
 The output is a way to display or export data from Terraform configurations. In this case, it outputs the value of the hello_world variable, making it visible when Terraform applies the configuration.  
 <br>
 **Outputs** are used to extract useful information about the resources, like IP addresses or other computed data. Outputs can be queried or displayed after Terraform has run, and can also be used to pass data to other Terraform configurations.  
+
+### Data Sources
+
+### Providers

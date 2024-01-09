@@ -1,3 +1,4 @@
+#!/bin/bash
 
 cd 03-Deploy-nginx
 time ./destroy.sh

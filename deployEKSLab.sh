@@ -1,4 +1,3 @@
-set -x
 . ./.env
 
 docker login $DOCKER_SERVER -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
