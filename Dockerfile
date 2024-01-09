@@ -37,6 +37,7 @@ RUN mv ttyd /bin/ttyd
 WORKDIR /opt/apps/EKSClass
 
 COPY bashrc /etc/bash.bashrc
+COPY auto* /root
 COPY terraform .
 
 RUN rm -rf terraform 
