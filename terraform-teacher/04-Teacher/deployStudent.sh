@@ -20,6 +20,7 @@ spec:
   containers:
   - name: eksclass-container-${studentNumber}
     image: ${DOCKER_IMAGE}
+    imagePullPolicy: Always
     ports:
     - containerPort: 7681
 

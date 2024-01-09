@@ -28,4 +28,5 @@ do
 done
 
 
-
+rm *.log
+rm *.json
